@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.vaadin.addons.example</groupId>
-    <artifactId>clock</artifactId>
-    <version>1.0.0</version>
-    <name>Clock</name>
-    <description>Clock widget example for Vaadin</description>
+    <groupId>org.vaadin</groupId>
+    <artifactId>experimental-components</artifactId>
+    <version>0.0.1</version>
+    <name>Experimental components</name>
+    <description>Experimental components</description>
 
     <properties>
         <vaadin.version>24.6.5</vaadin.version>
@@ -22,7 +22,7 @@
     </properties>
 
     <organization>
-        <name>###author###</name>
+        <name>Vaadin</name>
     </organization>
     <licenses>
         <license>
@@ -84,8 +84,28 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
             <artifactId>vaadin-core</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.7.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
