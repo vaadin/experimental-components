@@ -24,23 +24,11 @@
     "useDefineForClassFields": false,
     "baseUrl": "src/main/frontend",
     "paths": {
-      "@vaadin/flow-frontend": [
-        "generated/jar-resources"
-      ],
-      "@vaadin/flow-frontend/*": [
-        "generated/jar-resources/*"
-      ],
-      "Frontend/*": [
-        "*"
-      ]
+      "@vaadin/flow-frontend": ["generated/jar-resources"],
+      "@vaadin/flow-frontend/*": ["generated/jar-resources/*"],
+      "Frontend/*": ["*"]
     }
   },
-  "include": [
-    "src/main/frontend/**/*",
-    "types.d.ts"
-  ],
-  "exclude": [
-    "src/main/frontend/generated/jar-resources/**",
-    "src/main/frontend/generated/**/*",
-  ]
+  "include": ["src/main/frontend/**/*", "types.d.ts"],
+  "exclude": ["src/main/frontend/generated/jar-resources/**", "src/main/frontend/generated/**/*"]
 }

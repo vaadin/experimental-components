@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "./TypingIndicator.css";
+import './TypingIndicator.css';
 
 export default function TypingIndicator() {
   return (

@@ -4,7 +4,14 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky",
+    "postinstall": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@polymer/polymer": "3.5.2",
@@ -21,7 +28,10 @@
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
     "dropzone": "6.0.0-beta.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "lit": "3.2.1",
+    "prettier": "^3.5.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-markdown": "9.0.3",

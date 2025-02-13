@@ -1,9 +1,9 @@
-import ChatMessage from "./ChatMessage.js";
-import { Button, Icon, Scroller, TextArea } from "@vaadin/react-components";
-import "./Chat.css";
-import Dropzone from "dropzone";
-import "dropzone/dist/basic.css";
-import React, { useEffect, useRef, useState } from "react";
+import ChatMessage from './ChatMessage.js';
+import { Button, Icon, Scroller, TextArea } from '@vaadin/react-components';
+import './Chat.css';
+import Dropzone from 'dropzone';
+import 'dropzone/dist/basic.css';
+import React, { useEffect, useRef, useState } from 'react';
 
 export interface Subscription<T> {
   onNext(callback: (value: T) => void): Subscription<T>;
@@ -25,11 +25,7 @@ interface Attachment {
 }
 
 export interface AiChatService<T> {
-  stream(
-    chatId: string,
-    userMessage: string,
-    options?: T
-  ): Subscription<string>;
+  stream(chatId: string, userMessage: string, options?: T): Subscription<string>;
 
   getHistory(chatId: string): Promise<Message[]>;
 
@@ -51,21 +47,14 @@ interface ChatProps<T> {
   service: AiChatService<T>;
   acceptedFiles?: string;
   options?: T;
-  renderer?: Parameters<typeof ChatMessage>[0]["renderer"];
+  renderer?: Parameters<typeof ChatMessage>[0]['renderer'];
   className?: string;
 }
 
-export function Chat<T = {}>({
-  chatId,
-  service,
-  acceptedFiles,
-  options,
-  renderer,
-  className,
-}: ChatProps<T>) {
+export function Chat<T = {}>({ chatId, service, acceptedFiles, options, renderer, className }: ChatProps<T>) {
   const [working, setWorking] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const dropzone = useRef<Dropzone>();
 
   useEffect(() => {
@@ -96,34 +85,26 @@ export function Chat<T = {}>({
   function getCompletion(userMessage: string, attachments?: File[]) {
     setWorking(true);
 
-    const uploadedAttachments = (attachments || []).filter(
-      (file) => "__attachmentId" in file
-    );
+    const uploadedAttachments = (attachments || []).filter((file) => '__attachmentId' in file);
 
     const messageAttachments: Attachment[] = uploadedAttachments.map((file) => {
-      const isImage = file.type.startsWith("image/");
+      const isImage = file.type.startsWith('image/');
       return {
         key: file.__attachmentId as string,
         fileName: file.name,
-        type: isImage ? "image" : "document",
+        type: isImage ? 'image' : 'document',
         url: isImage ? (file as any).dataURL : undefined,
       };
     });
 
-    setMessages((msgs) => [
-      ...msgs,
-      { role: "user", content: userMessage, attachments: messageAttachments },
-    ]);
+    setMessages((msgs) => [...msgs, { role: 'user', content: userMessage, attachments: messageAttachments }]);
 
     let first = true;
     service
       .stream(chatId, userMessage, options)
       .onNext((token) => {
         if (first && token) {
-          setMessages((msgs) => [
-            ...msgs,
-            { role: "assistant", content: token },
-          ]);
+          setMessages((msgs) => [...msgs, { role: 'assistant', content: token }]);
           first = false;
         } else {
           appendToLastMessage(token);
@@ -136,9 +117,9 @@ export function Chat<T = {}>({
   function onSubmit() {
     getCompletion(
       message,
-      dropzone.current?.files.filter((file) => file.accepted)
+      dropzone.current?.files.filter((file) => file.accepted),
     );
-    setMessage("");
+    setMessage('');
 
     if (dropzone.current) {
       Object.assign(dropzone.current, { ignoreRemove: true });
@@ -149,19 +130,19 @@ export function Chat<T = {}>({
 
   useEffect(() => {
     if (acceptedFiles) {
-      dropzone.current = new Dropzone(".vaadin-chat-component", {
-        url: "/file/post",
-        previewsContainer: ".dropzone-previews",
+      dropzone.current = new Dropzone('.vaadin-chat-component', {
+        url: '/file/post',
+        previewsContainer: '.dropzone-previews',
         autoProcessQueue: false,
         addRemoveLinks: true,
         acceptedFiles,
         maxFilesize: 5,
       });
 
-      dropzone.current.on("addedfile", (file) => addAttachment(file));
-      dropzone.current.on("removedfile", (file) => {
+      dropzone.current.on('addedfile', (file) => addAttachment(file));
+      dropzone.current.on('removedfile', (file) => {
         // TODO: Is there a better way to handle this?
-        if (!("ignoreRemove" in dropzone.current!)) {
+        if (!('ignoreRemove' in dropzone.current!)) {
           removeAttachment(file);
         }
       });
@@ -172,7 +153,7 @@ export function Chat<T = {}>({
     };
   }, []);
 
-  const waiting = messages[messages.length - 1]?.role === "user";
+  const waiting = messages[messages.length - 1]?.role === 'user';
 
   return (
     <div className={`vaadin-chat-component dropzone ${className}`}>
@@ -180,9 +161,7 @@ export function Chat<T = {}>({
         {messages.map((message, index) => (
           <ChatMessage message={message} key={index} renderer={renderer} />
         ))}
-        {waiting ? (
-          <ChatMessage waiting message={{ role: "assistant", content: "" }} />
-        ) : null}
+        {waiting ? <ChatMessage waiting message={{ role: 'assistant', content: '' }} /> : null}
       </Scroller>
 
       {waiting ? (
@@ -196,17 +175,14 @@ export function Chat<T = {}>({
       ) : null}
 
       <div className="input-container p-s" aria-label="Input container">
-        <div
-          className="dropzone-previews"
-          dangerouslySetInnerHTML={{ __html: "" }}
-        ></div>
+        <div className="dropzone-previews" dangerouslySetInnerHTML={{ __html: '' }}></div>
 
         <TextArea
           className="input"
           minRows={1}
           disabled={working}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey && message) {
+            if (e.key === 'Enter' && !e.shiftKey && message) {
               e.preventDefault();
               onSubmit();
             }
@@ -214,16 +190,14 @@ export function Chat<T = {}>({
           onValueChanged={(e) => setMessage(e.detail.value)}
           placeholder="Message"
           value={message}
-          aria-label="Message input"
-        >
+          aria-label="Message input">
           <Button
             theme="icon tertiary small"
             className="dz-message"
             slot="suffix"
             disabled={working}
             hidden={!acceptedFiles}
-            aria-label="Upload attachment"
-          >
+            aria-label="Upload attachment">
             <Icon icon="vaadin:upload" />
           </Button>
 
@@ -232,22 +206,19 @@ export function Chat<T = {}>({
             slot="suffix"
             onClick={onSubmit}
             disabled={working || !message}
-            aria-label="Send"
-          >
+            aria-label="Send">
             <Icon
               src={`data:image/svg+xml,${encodeURIComponent(
                 `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>`
+                </svg>`,
               )}`}
             />
           </Button>
         </TextArea>
       </div>
 
-      <div className="drop-curtain">
-        Drop a file here to add it to the chat 📁
-      </div>
+      <div className="drop-curtain">Drop a file here to add it to the chat 📁</div>
     </div>
   );
 }
