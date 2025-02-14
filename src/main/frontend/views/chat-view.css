@@ -1,0 +1,4 @@
+@import url('@vaadin/react-components/css/Lumo.css');
+@import url('@vaadin/react-components/css/lumo/Typography.css');
+@import url('@vaadin/react-components/css/lumo/Color.css');
+@import url('@vaadin/react-components/css/lumo/Utility.module.css');

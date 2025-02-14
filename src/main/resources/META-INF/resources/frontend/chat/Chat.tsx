@@ -1,9 +1,10 @@
 import ChatMessage from './ChatMessage.js';
-import { Button, Icon, Scroller, TextArea } from '@vaadin/react-components';
+import { Button, ButtonElement, Icon, Scroller, TextArea } from '@vaadin/react-components';
 import './Chat.css';
 import Dropzone from 'dropzone';
 import 'dropzone/dist/basic.css';
 import React, { useEffect, useRef, useState } from 'react';
+import { getWaveBlob } from 'webm-to-wav-converter';
 
 export interface Subscription<T> {
   onNext(callback: (value: T) => void): Subscription<T>;
@@ -26,6 +27,8 @@ interface Attachment {
 
 export interface AiChatService<T> {
   stream(chatId: string, userMessage: string, options?: T): Subscription<string>;
+
+  streamAudio(chatId: string, audioFile: File, options?: T): Promise<string>;
 
   getHistory(chatId: string): Promise<Message[]>;
 
@@ -55,7 +58,80 @@ export function Chat<T = {}>({ chatId, service, acceptedFiles, options, renderer
   const [working, setWorking] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
+  const [recording, setRecording] = useState(false);
   const dropzone = useRef<Dropzone>();
+  const recordButton = useRef<ButtonElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.start();
+      setRecording(true);
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current?.state === 'recording') {
+      // Remove extra stop calls and track stopping
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+      mediaRecorderRef.current.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        await sendAudioToServer(audioBlob);
+        setRecording(false);
+      };
+      mediaRecorderRef.current.stop();
+    }
+  };
+
+  // useEffect(() => {
+  //   // TODO: This doesn't work nicely
+  //   const activeObserver = new MutationObserver(() => {
+  //     if (recordButton.current?.hasAttribute('active')) {
+  //       startRecording();
+  //     } else {
+  //       stopRecording();
+  //     }
+  //   });
+  //   if (recordButton.current) {
+  //     activeObserver.observe(recordButton.current, { attributes: true });
+  //   }
+
+  //   return () => activeObserver.disconnect();
+  // }, [recordButton]);
+
+  const sendAudioToServer = async (audioBlob: Blob) => {
+    setWorking(true);
+
+    const wavBlob = await getWaveBlob(audioBlob, false);
+
+    const wavBlobFile = new File([wavBlob], 'audio.wav', { type: 'audio/wav' });
+
+    const audioBase64 = await service.streamAudio(chatId, wavBlobFile, options);
+    playResponseAudio(audioBase64);
+
+    setWorking(false);
+  };
+
+  const playResponseAudio = (base64Audio: string) => {
+    const audio = new Audio(`data:audio/wav;base64,${base64Audio}`);
+    audio.play();
+  };
 
   useEffect(() => {
     service.getHistory(chatId).then(setMessages);
@@ -191,6 +267,15 @@ export function Chat<T = {}>({ chatId, service, acceptedFiles, options, renderer
           placeholder="Message"
           value={message}
           aria-label="Message input">
+          <Button
+            slot="suffix"
+            theme={`icon tertiary small` + (recording ? ' error' : '')}
+            ref={recordButton}
+            onClick={recording ? stopRecording : startRecording}
+            disabled={working}>
+            <Icon theme="error" icon={recording ? 'vaadin:stop' : 'vaadin:microphone'} slot="prefix" />
+          </Button>
+
           <Button
             theme="icon tertiary small"
             className="dz-message"

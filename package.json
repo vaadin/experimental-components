@@ -19,6 +19,14 @@
     "@vaadin/bundles": "24.7.0-alpha8",
     "@vaadin/common-frontend": "0.0.19",
     "@vaadin/cookie-consent": "24.7.0-alpha8",
+    "@vaadin/hilla-file-router": "24.7.0-alpha11",
+    "@vaadin/hilla-frontend": "24.7.0-alpha11",
+    "@vaadin/hilla-lit-form": "24.7.0-alpha11",
+    "@vaadin/hilla-react-auth": "24.7.0-alpha11",
+    "@vaadin/hilla-react-crud": "24.7.0-alpha11",
+    "@vaadin/hilla-react-form": "24.7.0-alpha11",
+    "@vaadin/hilla-react-i18n": "24.7.0-alpha11",
+    "@vaadin/hilla-react-signals": "24.7.0-alpha11",
     "@vaadin/polymer-legacy-adapter": "24.7.0-alpha8",
     "@vaadin/react-components": "24.7.0-alpha8",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
@@ -37,7 +45,8 @@
     "react-dom": "18.3.1",
     "react-markdown": "9.0.3",
     "react-router": "7.1.4",
-    "rehype-highlight": "7.0.2"
+    "rehype-highlight": "7.0.2",
+    "webm-to-wav-converter": "1.1.0"
   },
   "devDependencies": {
     "@babel/preset-react": "7.26.3",
@@ -48,6 +57,16 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
+    "@vaadin/hilla-generator-cli": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-core": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-backbone": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-barrel": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-client": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-model": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-push": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-signals": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-plugin-subtypes": "24.7.0-alpha11",
+    "@vaadin/hilla-generator-utils": "24.7.0-alpha11",
     "@vitejs/plugin-react": "4.3.4",
     "@vitest/browser": "^3.0.5",
     "async": "3.2.6",
@@ -73,6 +92,14 @@
       "@vaadin/bundles": "24.7.0-alpha8",
       "@vaadin/common-frontend": "0.0.19",
       "@vaadin/cookie-consent": "24.7.0-alpha8",
+      "@vaadin/hilla-file-router": "24.7.0-alpha11",
+      "@vaadin/hilla-frontend": "24.7.0-alpha11",
+      "@vaadin/hilla-lit-form": "24.7.0-alpha11",
+      "@vaadin/hilla-react-auth": "24.7.0-alpha11",
+      "@vaadin/hilla-react-crud": "24.7.0-alpha11",
+      "@vaadin/hilla-react-form": "24.7.0-alpha11",
+      "@vaadin/hilla-react-i18n": "24.7.0-alpha11",
+      "@vaadin/hilla-react-signals": "24.7.0-alpha11",
       "@vaadin/polymer-legacy-adapter": "24.7.0-alpha8",
       "@vaadin/react-components": "24.7.0-alpha8",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
@@ -88,7 +115,8 @@
       "react-dom": "18.3.1",
       "react-markdown": "9.0.3",
       "react-router": "7.1.4",
-      "rehype-highlight": "7.0.2"
+      "rehype-highlight": "7.0.2",
+      "webm-to-wav-converter": "1.1.0"
     },
     "devDependencies": {
       "@babel/preset-react": "7.26.3",
@@ -97,6 +125,16 @@
       "@rollup/pluginutils": "5.1.4",
       "@types/react": "18.3.18",
       "@types/react-dom": "18.3.5",
+      "@vaadin/hilla-generator-cli": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-core": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-backbone": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-barrel": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-client": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-model": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-push": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-signals": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-plugin-subtypes": "24.7.0-alpha11",
+      "@vaadin/hilla-generator-utils": "24.7.0-alpha11",
       "@vitejs/plugin-react": "4.3.4",
       "async": "3.2.6",
       "glob": "11.0.1",
@@ -111,7 +149,7 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "caa63c9cf88502f1ae993bfeb79848e279bdf944c11a6149861891ded9852e1a"
+    "hash": "5b8d7c28717c83f7568a2c67b2bc7b68786ecf8a6088ede3338ac6b3ff733cb6"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -137,6 +175,15 @@
     "lint-staged": "$lint-staged",
     "prettier": "$prettier",
     "@vaadin/cookie-consent": "$@vaadin/cookie-consent",
-    "react-router": "$react-router"
+    "react-router": "$react-router",
+    "@vaadin/hilla-frontend": "$@vaadin/hilla-frontend",
+    "@vaadin/hilla-react-auth": "$@vaadin/hilla-react-auth",
+    "@vaadin/hilla-react-crud": "$@vaadin/hilla-react-crud",
+    "@vaadin/hilla-file-router": "$@vaadin/hilla-file-router",
+    "@vaadin/hilla-react-i18n": "$@vaadin/hilla-react-i18n",
+    "@vaadin/hilla-lit-form": "$@vaadin/hilla-lit-form",
+    "@vaadin/hilla-react-form": "$@vaadin/hilla-react-form",
+    "@vaadin/hilla-react-signals": "$@vaadin/hilla-react-signals",
+    "webm-to-wav-converter": "$webm-to-wav-converter"
   }
 }

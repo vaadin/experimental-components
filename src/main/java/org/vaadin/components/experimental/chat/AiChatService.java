@@ -23,6 +23,8 @@ public interface AiChatService<T> {
 
     Flux<String> stream(String chatId, String userMessage, @Nullable T options);
 
+    String streamAudio(String chatId, MultipartFile file, @Nullable T options);
+
     String uploadAttachment(String chatId, MultipartFile file);
 
     void removeAttachment(String chatId, String attachmentId);
