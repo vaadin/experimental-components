@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.vaadin</groupId>
@@ -43,6 +43,15 @@
         <connection>scm:git:git://github.com/vaadin/experimental-components.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/vaadin/experimental-components.git</developerConnection>
     </scm>
+    
+    <developers>
+        <developer>
+            <name>Tomi Virkki</name>
+            <email>tomi.virkki@vaadin.com</email>
+            <organization>Vaadin</organization>
+            <organizationUrl>https://vaadin.com/</organizationUrl>
+        </developer>
+    </developers>
 
     <dependencyManagement>
         <dependencies>
@@ -295,8 +304,8 @@
             </properties>
             <dependencies>
                 <!-- We need to duplicate dependencies here in order to be able to
-                     run the test view in production mode when developing.
-                     Note that scope needs to be runtime instead of the test scope above. -->
+                run the test view in production mode when developing.
+                Note that scope needs to be runtime instead of the test scope above. -->
                 <dependency>
                     <groupId>com.vaadin</groupId>
                     <artifactId>vaadin-core</artifactId>
@@ -383,7 +392,7 @@
                         <executions>
                             <execution>
                                 <!-- Since the view class is defined in test, after compilation copy
-                                    it to the runtime classpath to ensure it gets visited by vaadin-maven-plugin -->
+                                it to the runtime classpath to ensure it gets visited by vaadin-maven-plugin -->
                                 <id>copy-test-to-classes</id>
                                 <phase>process-test-classes</phase>
                                 <goals>
