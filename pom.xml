@@ -6,9 +6,10 @@
 
     <groupId>org.vaadin</groupId>
     <artifactId>experimental-components</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>Experimental components</name>
     <description>Experimental components</description>
+    <url>https://github.com/vaadin/experimental-components</url>
 
     <properties>
         <vaadin.version>24.7.0.alpha8</vaadin.version>
@@ -31,6 +32,18 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/vaadin/experimental-components/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/vaadin/experimental-components</url>
+        <connection>scm:git:git://github.com/vaadin/experimental-components.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:/vaadin/experimental-components.git</developerConnection>
+    </scm>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
