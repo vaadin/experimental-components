@@ -463,11 +463,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <!-- Prevent gpg from using pinentry programs -->
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
+                            <bestPractices>true</bestPractices>
                         </configuration>
                     </plugin>
                 </plugins>
