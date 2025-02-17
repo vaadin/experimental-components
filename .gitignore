@@ -37,6 +37,5 @@ node_modules
 .vscode
 src/main/frontend/generated
 src/main/frontend/index.html
-package-lock.json
 vite.generated.ts
 src/main/bundles

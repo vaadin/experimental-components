@@ -28,8 +28,10 @@ const customConfig: UserConfigFn = (env) => ({
     include: ['./tests/**/*.{test,spec}.ts?(x)'],
     globals: true,
     browser: {
+      provider: 'playwright',
       enabled: true,
-      name: 'chrome',
+      // at least one instance is required
+      instances: [{ browser: 'chromium' }],
     },
   },
 });
