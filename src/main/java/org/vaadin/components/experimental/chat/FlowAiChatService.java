@@ -5,17 +5,14 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 
-public interface AiChatService<T> {
+public interface FlowAiChatService<T> {
 
   record Attachment(String type, String key, String fileName, String url) {}
 
   record Message(String role, String content, @Nullable List<Attachment> attachments) {}
 
-  Flux<String> stream(String chatId, String userMessage, @Nullable T options);
-
-  String uploadAttachment(String chatId, MultipartFile file);
-
-  void removeAttachment(String chatId, String attachmentId);
+  Flux<String> stream(
+      String chatId, String userMessage, List<MultipartFile> attachments, @Nullable T options);
 
   List<Message> getHistory(String chatId);
 

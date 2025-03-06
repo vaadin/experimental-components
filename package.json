@@ -28,6 +28,7 @@
     "@vaadin/hilla-react-signals": "24.7.0-alpha11",
     "@vaadin/polymer-legacy-adapter": "24.7.0-alpha8",
     "@vaadin/react-components": "24.7.0-alpha8",
+    "@vaadin/react-components-pro": "24.7.0-alpha8",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
     "@vaadin/vaadin-lumo-styles": "24.7.0-alpha8",
     "@vaadin/vaadin-material-styles": "24.7.0-alpha8",
@@ -40,6 +41,7 @@
     "lint-staged": "^15.4.3",
     "lit": "3.2.1",
     "prettier": "^3.5.0",
+    "proj4": "2.15.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-markdown": "9.0.3",
@@ -100,6 +102,7 @@
       "@vaadin/hilla-react-signals": "24.7.0-alpha11",
       "@vaadin/polymer-legacy-adapter": "24.7.0-alpha8",
       "@vaadin/react-components": "24.7.0-alpha8",
+      "@vaadin/react-components-pro": "24.7.0-alpha8",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
       "@vaadin/vaadin-lumo-styles": "24.7.0-alpha8",
       "@vaadin/vaadin-material-styles": "24.7.0-alpha8",
@@ -109,6 +112,7 @@
       "date-fns": "2.29.3",
       "dropzone": "6.0.0-beta.2",
       "lit": "3.2.1",
+      "proj4": "2.15.0",
       "react": "18.3.1",
       "react-dom": "18.3.1",
       "react-markdown": "9.0.3",
@@ -146,7 +150,7 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "7b648d8dbbca0aa60d3602e1092c7b24b3ffbc844a43da43984c2d1795504cf6"
+    "hash": "60545a673e79cda5ec5b26fff767eb976bdfea9e399cf7c5fc0f8feb8482f9cc"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -179,6 +183,8 @@
     "@vaadin/hilla-react-i18n": "$@vaadin/hilla-react-i18n",
     "@vaadin/hilla-lit-form": "$@vaadin/hilla-lit-form",
     "@vaadin/hilla-react-form": "$@vaadin/hilla-react-form",
-    "@vaadin/hilla-react-signals": "$@vaadin/hilla-react-signals"
+    "@vaadin/hilla-react-signals": "$@vaadin/hilla-react-signals",
+    "@vaadin/react-components-pro": "$@vaadin/react-components-pro",
+    "proj4": "$proj4"
   }
 }
