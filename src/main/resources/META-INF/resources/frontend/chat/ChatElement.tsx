@@ -13,34 +13,13 @@ class ChatElement extends ReactAdapterElement {
     this.nextCallback?.(value);
   }
 
-  // Called by the Java component to handle errors
   handleError(message: string): void {
     this.errorCallback?.(message);
   }
 
-  // Called by the Java component to handle completion
   handleComplete(): void {
     this.completeCallback?.();
   }
-
-  // uploadAttachment(chatId: string, file: File): Promise<string> {
-  //   this.dispatchEvent(
-  //     new CustomEvent('uploadAttachment', {
-  //       detail: { chatId, file },
-  //     }),
-  //   );
-  //   // In a real implementation, this would return an ID from the server
-  //   return Promise.resolve(`attachment-${Date.now()}`);
-  // }
-
-  // removeAttachment(chatId: string, attachmentId: string): Promise<void> {
-  //   this.dispatchEvent(
-  //     new CustomEvent('removeAttachment', {
-  //       detail: { chatId, attachmentId },
-  //     }),
-  //   );
-  //   return Promise.resolve();
-  // }
 
   protected render(hooks: RenderHooks): ReactElement {
     const [acceptedFiles] = hooks.useState<string>('acceptedFiles');
@@ -54,7 +33,7 @@ class ChatElement extends ReactAdapterElement {
 
     const service = useMemo<AiChatService<string>>(() => {
       return {
-        stream: (chatId: string, userMessage: string, options?: string | undefined) => {
+        stream: (_chatId: string, userMessage: string, _options?: string | undefined) => {
           const subscription: Subscription<string> = {
             onNext: (callback: (value: string) => void): Subscription<string> => {
               this.nextCallback = callback;
@@ -85,10 +64,10 @@ class ChatElement extends ReactAdapterElement {
           getHistoryEvent();
           return Promise.resolve(history || []);
         },
-        closeChat: (chatId: string) => {
+        closeChat: (_chatId: string) => {
           return Promise.resolve();
         },
-        uploadAttachment: (chatId: string, file: File) => {
+        uploadAttachment: (_chatId: string, file: File) => {
           const uploadUrl = this.getAttribute('target');
           if (uploadUrl) {
             const formData = new FormData();
