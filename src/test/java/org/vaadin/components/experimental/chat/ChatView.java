@@ -12,7 +12,7 @@ import reactor.core.publisher.Flux;
 
 @Route("chat")
 @RouteAlias("")
-public class ChatView extends VerticalLayout implements FlowAiChatService<ChatView.Options> {
+public class ChatView extends VerticalLayout implements FlowAiChatService {
 
   // Store chat history for demo purposes
   private final Map<String, List<Message>> chatHistory = new HashMap<>();
@@ -23,11 +23,7 @@ public class ChatView extends VerticalLayout implements FlowAiChatService<ChatVi
     setSpacing(true);
 
     // Create a chat component with this view as the service
-    var chat =
-        new Chat<Options>(this)
-            .withOptions(new Options("This is a system message for the chat."))
-            .withAcceptedFiles("image/*")
-            .withChatId("demo-chat");
+    var chat = new Chat(this).withAcceptedFiles("image/*").withChatId("demo-chat");
 
     // Add some initial messages for demonstration
     initializeDummyChat("demo-chat");
@@ -59,8 +55,7 @@ public class ChatView extends VerticalLayout implements FlowAiChatService<ChatVi
   }
 
   @Override
-  public Flux<String> stream(
-      String chatId, String userMessage, List<MultipartFile> attachments, Options options) {
+  public Flux<String> stream(String chatId, String userMessage, List<MultipartFile> attachments) {
     // Store the user message
     if (!chatHistory.containsKey(chatId)) {
       chatHistory.put(chatId, new ArrayList<>());
@@ -122,12 +117,5 @@ public class ChatView extends VerticalLayout implements FlowAiChatService<ChatVi
   public void closeChat(String chatId) {
     // Clean up resources
     chatHistory.remove(chatId);
-  }
-
-  /** Chat options record */
-  public record Options(String systemMessage) {
-    public Options() {
-      this("");
-    }
   }
 }

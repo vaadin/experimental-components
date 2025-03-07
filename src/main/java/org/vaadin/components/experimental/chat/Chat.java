@@ -29,16 +29,15 @@ import org.vaadin.components.experimental.markdown.Markdown;
 @JsModule("./chat/ChatElement.tsx")
 @Tag("chat-element")
 @Uses(Markdown.class)
-public class Chat<T> extends ReactAdapterComponent implements HasSize, StreamVariable {
+public class Chat extends ReactAdapterComponent implements HasSize, StreamVariable {
 
   private String chatId;
-  private T options;
   private ByteArrayOutputStream outputStream;
   private List<MultipartFile> attachments = new ArrayList<>();
 
-  public Chat(FlowAiChatService<T> service) {
+  public Chat(FlowAiChatService service) {
     super();
-    setSizeFull();
+    getElement().getStyle().setFlexGrow("1");
 
     var target = new StreamReceiver(getElement().getNode(), "chat-upload", this);
     getElement().setAttribute("target", target);
@@ -51,7 +50,7 @@ public class Chat<T> extends ReactAdapterComponent implements HasSize, StreamVar
             "stream",
             event -> {
               var userMessage = event.getEventData().getString("event.detail");
-              var flux = service.stream(chatId, userMessage, attachments, options);
+              var flux = service.stream(chatId, userMessage, attachments);
               attachments.clear();
 
               flux.subscribe(
@@ -89,23 +88,12 @@ public class Chat<T> extends ReactAdapterComponent implements HasSize, StreamVar
   }
 
   /**
-   * Sets the options for the chat.
-   *
-   * @param options the options to set
-   * @return this instance for method chaining
-   */
-  public Chat<T> withOptions(T options) {
-    this.options = options;
-    return this;
-  }
-
-  /**
    * Sets the accepted file types for attachments.
    *
    * @param acceptedFiles MIME types to accept, e.g. "image/*"
    * @return this instance for method chaining
    */
-  public Chat<T> withAcceptedFiles(String acceptedFiles) {
+  public Chat withAcceptedFiles(String acceptedFiles) {
     getElement().setProperty("acceptedFiles", acceptedFiles);
     return this;
   }
@@ -125,7 +113,7 @@ public class Chat<T> extends ReactAdapterComponent implements HasSize, StreamVar
    * @param chatId the chat ID to set
    * @return this instance for method chaining
    */
-  public Chat<T> withChatId(String chatId) {
+  public Chat withChatId(String chatId) {
     this.chatId = chatId;
     return this;
   }
