@@ -117,6 +117,15 @@
   color: var(--lumo-body-text-color);
 }
 
+.vaadin-chat-component .input::part(input-field) {
+  padding-block: 0;
+}
+
+.vaadin-chat-component .input textarea {
+  align-self: auto;
+  padding-block: var(--lumo-space-s);
+}
+
 .vaadin-chat-component .input-container {
   box-sizing: border-box;
   width: 100%;
