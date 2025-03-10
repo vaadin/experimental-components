@@ -4,7 +4,7 @@
 
     <groupId>org.vaadin</groupId>
     <artifactId>experimental-components</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>Experimental components</name>
     <description>Experimental components</description>
     <url>https://github.com/vaadin/experimental-components</url>
@@ -40,7 +40,7 @@
         <url>https://github.com/vaadin/experimental-components</url>
         <connection>scm:git:git://github.com/vaadin/experimental-components.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/vaadin/experimental-components.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>experimental-components-0.0.2</tag>
   </scm>
     
     <developers>
