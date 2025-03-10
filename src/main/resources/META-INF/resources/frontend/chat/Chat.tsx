@@ -1,7 +1,7 @@
 import ChatMessage from './ChatMessage.js';
 import { Button, Icon, Scroller, TextArea } from '@vaadin/react-components';
 import './Chat.css';
-import Dropzone from 'dropzone';
+import Dropzone, { DropzoneFile } from 'dropzone';
 import 'dropzone/dist/basic.css';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -73,9 +73,17 @@ export function Chat<T = {}>({ chatId, service, acceptedFiles, options, renderer
     });
   }
 
-  async function addAttachment(file: File) {
-    const attachmentId = await service.uploadAttachment(chatId, file);
-    (file as any).__attachmentId = attachmentId;
+  async function addAttachment(file: DropzoneFile) {
+    queueMicrotask(async () => {
+      if (file.accepted) {
+        const attachmentId = await service.uploadAttachment(chatId, file);
+        (file as any).__attachmentId = attachmentId;
+      } else {
+        Object.assign(dropzone.current!, { ignoreRemove: true });
+        dropzone.current?.removeFile(file);
+        Object.assign(dropzone.current!, { ignoreRemove: false });
+      }
+    });
   }
 
   async function removeAttachment(file: File) {

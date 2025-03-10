@@ -180,7 +180,7 @@ describe('Chat', () => {
     expect(service.uploadAttachment).toHaveBeenCalledWith('1', expect.any(File));
   });
 
-  it.skip('ignores unsupported files', async () => {
+  it('ignores unsupported files', async () => {
     const service = getAiChatServiceMock();
     renderChat({ service, acceptedFiles: 'image/*' });
 
