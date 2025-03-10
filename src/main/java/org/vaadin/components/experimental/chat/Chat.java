@@ -7,6 +7,8 @@ import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.react.ReactAdapterComponent;
 import com.vaadin.flow.dom.DomEvent;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.server.StreamReceiver;
 import com.vaadin.flow.server.StreamVariable;
 import java.io.ByteArrayOutputStream;
@@ -25,7 +27,7 @@ import org.vaadin.components.experimental.markdown.Markdown;
 @JsModule("./chat/ChatElement.tsx")
 @Tag("chat-element")
 @Uses(Markdown.class)
-public class Chat extends ReactAdapterComponent implements HasSize {
+public class Chat extends ReactAdapterComponent implements HasSize, BeforeEnterObserver {
 
   private final List<AttachmentFile> attachments = new ArrayList<>();
   private final FlowAiChatService service;
@@ -88,6 +90,11 @@ public class Chat extends ReactAdapterComponent implements HasSize {
     attachments.removeIf(attachment -> attachment.fileName().equals(attachmentId));
   }
 
+  private void updateHistory() {
+    var history = service.getHistory(chatId);
+    getElement().setPropertyList("history", history);
+  }
+
   /**
    * Gets the accepted attachment file types.
    *
@@ -124,9 +131,15 @@ public class Chat extends ReactAdapterComponent implements HasSize {
     this.chatId = chatId;
     attachments.clear();
 
-    var history = service.getHistory(chatId);
-    getElement().setPropertyList("history", history);
+    updateHistory();
     getElement().setProperty("chatId", chatId);
+  }
+
+  @Override
+  public void beforeEnter(BeforeEnterEvent event) {
+    if (event.isRefreshEvent()) {
+      updateHistory();
+    }
   }
 
   private class AttachmentStreamVariable implements StreamVariable {
