@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 
 @Route("chat")
@@ -55,7 +54,7 @@ public class ChatView extends VerticalLayout implements FlowAiChatService {
   }
 
   @Override
-  public Flux<String> stream(String chatId, String userMessage, List<MultipartFile> attachments) {
+  public Flux<String> stream(String chatId, String userMessage, List<AttachmentFile> attachments) {
     // Store the user message
     if (!chatHistory.containsKey(chatId)) {
       chatHistory.put(chatId, new ArrayList<>());
