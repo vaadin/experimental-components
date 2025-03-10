@@ -24,11 +24,11 @@ class ChatElement extends ReactAdapterElement {
   protected render(hooks: RenderHooks): ReactElement {
     const [acceptedFiles] = hooks.useState<string>('acceptedFiles');
     const [options] = hooks.useState<string>('options');
+    const [chatId] = hooks.useState<string>('chatId');
     const [history] = hooks.useState<Message[]>('history');
     const pollInterval = useRef<number | null>(null);
 
     const streamEvent = hooks.useCustomEvent<string>('stream');
-    const getHistoryEvent = hooks.useCustomEvent('getHistory');
     const removeAttachmentEvent = hooks.useCustomEvent<string>('removeAttachment');
 
     const service = useMemo<AiChatService<string>>(() => {
@@ -61,7 +61,6 @@ class ChatElement extends ReactAdapterElement {
           return subscription;
         },
         getHistory: (_chatId: string) => {
-          getHistoryEvent();
           return Promise.resolve(history || []);
         },
         closeChat: (_chatId: string) => {
@@ -92,9 +91,7 @@ class ChatElement extends ReactAdapterElement {
       };
     }, [history]);
 
-    return (
-      <Chat service={service} chatId={String(history?.length || 0)} acceptedFiles={acceptedFiles} options={options} />
-    );
+    return <Chat service={service} chatId={chatId} acceptedFiles={acceptedFiles} options={options} />;
   }
 }
 

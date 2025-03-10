@@ -1,12 +1,16 @@
 package org.vaadin.components.experimental.chat;
 
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.theme.lumo.LumoIcon;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import reactor.core.publisher.Flux;
 
 @Route("chat")
@@ -21,14 +25,27 @@ public class ChatView extends VerticalLayout implements FlowAiChatService {
     setPadding(true);
     setSpacing(true);
 
-    // Create a chat component with this view as the service
-    var chat = new Chat(this).withAcceptedFiles("image/*").withChatId("demo-chat");
+    var initialChatId = UUID.randomUUID().toString();
 
     // Add some initial messages for demonstration
-    initializeDummyChat("demo-chat");
+    initializeDummyChat(initialChatId);
+
+    // Create a chat component with this view as the service
+    var chat = new Chat(this, initialChatId, "image/*");
+
+    var newChatButton = new Button(LumoIcon.PLUS.create());
+    newChatButton.addThemeVariants(
+        ButtonVariant.LUMO_ICON,
+        ButtonVariant.LUMO_SMALL,
+        ButtonVariant.LUMO_CONTRAST,
+        ButtonVariant.LUMO_TERTIARY);
+    newChatButton.addClickListener(
+        e -> {
+          chat.setChatId(UUID.randomUUID().toString());
+        });
 
     // Add the chat component to the view
-    add(chat);
+    add(newChatButton, chat);
   }
 
   /** Initialize a chat with some dummy messages */
@@ -90,12 +107,6 @@ public class ChatView extends VerticalLayout implements FlowAiChatService {
           + "- File attachments\n"
           + "- Customizable styling\n\n"
           + "What would you like to know more about?";
-    } else if (lowercaseMessage.contains("code") || lowercaseMessage.contains("example")) {
-      return "Here's a simple code example:\n\n```java\n"
-          + "Chat<Options> chat = new Chat<>(service);\n"
-          + "chat.withOptions(new Options())\n"
-          + "    .withAcceptedFiles(\"image/*\");\n"
-          + "```\n\nYou can customize it further based on your needs.";
     } else {
       return "I understand you're asking about \""
           + userMessage
