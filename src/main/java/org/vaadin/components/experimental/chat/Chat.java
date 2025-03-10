@@ -44,8 +44,6 @@ public class Chat extends ReactAdapterComponent implements HasSize, BeforeEnterO
 
     setChatId(chatId);
 
-    getElement().getStyle().setFlexGrow("1");
-
     var target =
         new StreamReceiver(getElement().getNode(), "chat-upload", new AttachmentStreamVariable());
     getElement().setAttribute("target", target);

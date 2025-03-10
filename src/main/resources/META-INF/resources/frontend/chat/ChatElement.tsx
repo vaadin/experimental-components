@@ -3,6 +3,7 @@ import React, { useMemo, useRef } from 'react';
 import { ReactAdapterElement, RenderHooks } from 'Frontend/generated/flow/ReactAdapter.js';
 import { AiChatService, Chat, Message, Subscription } from './Chat.js';
 import { ReactElement } from 'react';
+import './ChatElement.css';
 
 class ChatElement extends ReactAdapterElement {
   private errorCallback?: (message: string) => void;
