@@ -59,9 +59,14 @@ export function Chat<T = {}>({ chatId, service, acceptedFiles, options, renderer
 
   useEffect(() => {
     service.getHistory(chatId).then(setMessages);
+
+    const handleBeforeUnload = () => service.closeChat(chatId);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     return () => {
       // Close the previous chat when a new one is started
       service.closeChat(chatId);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [chatId]);
 
